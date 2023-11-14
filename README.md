@@ -1,2 +1,2 @@
-# calirig_data_hub
-a simple backend web server for my website
+# cnet_db_server
+a simple backend db web server for my website
