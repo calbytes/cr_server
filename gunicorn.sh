@@ -1,1 +1,0 @@
-gunicorn -w 4 -b unix:/home/cal/c0de/cnet_db_server/app.sock --umask 002 wsgi:app
