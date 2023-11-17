@@ -8,7 +8,7 @@ def hello_world():
 
 @app.route('/get_quote')
 def get_quote():
-    return 'Hello, Flask!\n'
+    return 'GetQuote!\n'
 
 @app.route('/post_contact_message')
 def post_contact_message():
