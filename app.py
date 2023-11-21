@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import webapp.db as db
+import db_manager.db as db
 
 app = Flask(__name__)
 
@@ -8,8 +8,8 @@ def get_quote():
     if(request.method == 'GET'):
         quote = db.get_selected_quote()[0]
         keys = ['quote', 'author', 'title']
-        row_dict = dict(zip(keys, quote))
-        return jsonify(row_dict)
+        dict = dict(zip(keys, quote))
+        return jsonify(dict)
     
     
 '''
