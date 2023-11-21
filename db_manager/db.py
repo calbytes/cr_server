@@ -1,6 +1,6 @@
 import psycopg
 from .config import DB_CONFIG
-from webapp.psql_queries import PSQL_QUERIES as psql
+from db_manager.psql_queries import PSQL_QUERIES as psql
  
 config = DB_CONFIG
 
