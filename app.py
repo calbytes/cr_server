@@ -7,9 +7,10 @@ app = Flask(__name__)
 def get_quote():
     if(request.method == 'GET'):
         quote = db.get_selected_quote()[0]
+        print('--->>> ' + str(quote))
         keys = ['quote', 'author', 'title']
-        dict = dict(zip(keys, quote))
-        return jsonify(dict)
+        quote_dict = dict(zip(keys, quote))
+        return jsonify(quote_dict)
     
     
 '''
