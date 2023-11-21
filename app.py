@@ -1,18 +1,41 @@
-from flask import Flask
+from flask import Flask, jsonify, request
+import webapp.db as db
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!\n'
-
-@app.route('/get_quote')
+@app.route('/quote', methods = ['GET', 'POST'])
 def get_quote():
-    return 'GetQuote!\n'
+    if(request.method == 'GET'):
+        quote = db.get_selected_quote()[0]
+        keys = ['quote', 'author', 'title']
+        row_dict = dict(zip(keys, quote))
+        return jsonify(row_dict)
+    
+    
+'''
+@app.route('/contact', methods = ['POST'])
+def contact():
+    return ''
 
-@app.route('/post_contact_message')
-def post_contact_message():
-    return 'message posted!'
+@app.route('/signup', methods = ['POST'])
+def signup():
+    if(request.method == 'POST'):
+        record = json.loads(request.data)
+        db.create_user
+    return ''
+
+@app.route('/cnetLogin', methods = ['POST'])
+def login():
+    if(request.method == 'POST'):
+        request
+    return ''
+
+@app.route('/indexIP', methods = ['POST'])
+def indexIP():
+    if(request.method == 'POST'):
+    return ''
+'''
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

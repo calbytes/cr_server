@@ -1,4 +1,4 @@
 flask
 gunicorn
 psycopg
-psycopg_pool
+psycopg[binary]
