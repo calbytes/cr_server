@@ -12,11 +12,16 @@ def get_quote():
         return jsonify(quote_dict)
     
     
-'''
+#TODO
 @app.route('/contact', methods = ['POST'])
 def contact():
-    return ''
+    print('in /contact API')
+    if(request.method == 'POST'):
+        print(request)
+        return 200
 
+
+'''
 @app.route('/signup', methods = ['POST'])
 def signup():
     if(request.method == 'POST'):

@@ -4,7 +4,6 @@ from db_manager.psql_queries import PSQL_QUERIES as psql
 import random
 from enum import Enum, auto
 
- 
 config = DB_CONFIG
 
 class Fetch(Enum):
@@ -12,7 +11,21 @@ class Fetch(Enum):
     ALL = auto()
     EXC = auto()
 
+def execute(psql_raw, fetch: Fetch, params=None):
+    with psycopg.connect(**config) as conn:
+        with conn.cursor() as cur:
+            cur.execute(psql_raw, params)
 
+            if fetch == Fetch.ONE:
+                row = cur.fetchone()
+                return row
+            elif fetch == Fetch.ALL:
+                rows = cur.fetchall()
+                return rows
+
+#
+
+# APIs for /quote 
 def get_random_quote():
     rows = execute(psql.SELECT_UNSELECTED_QUOTES, Fetch.ALL)
     random_num = random.randrange(len(rows))
@@ -31,17 +44,3 @@ def get_selected_quote():
                     Fetch.ONE, 
                     (quote_id,))
     return quote
-
-def execute(psql_raw, fetch: Fetch, params=None):
-    with psycopg.connect(**config) as conn:
-        with conn.cursor() as cur:
-            cur.execute(psql_raw, params)
-
-            if fetch == Fetch.ONE:
-                row = cur.fetchone()
-                return row
-            elif fetch == Fetch.ALL:
-                rows = cur.fetchall()
-                return rows
-            
-#TODO write function to update data, set quote.selected = TRUE. can get_data do
