@@ -12,3 +12,15 @@ class PSQL_QUERIES:
         FROM quotes 
         WHERE id = %s;
     '''
+
+    SELECT_UNSELECTED_QUOTES = '''
+        SELECT id 
+        FROM quotes 
+        WHERE selected = 'false';
+    '''
+
+    UPDATE_QUOTE_SELECTED = '''
+        UPDATE quotes 
+        SET selected = TRUE 
+        WHERE id = %s;
+    '''

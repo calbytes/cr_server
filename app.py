@@ -6,7 +6,8 @@ app = Flask(__name__)
 @app.route('/quote', methods = ['GET', 'POST'])
 def get_quote():
     if(request.method == 'GET'):
-        quote = db.get_selected_quote()[0]
+        quote = db.get_random_quote()
+        print(quote)
         keys = ['quote', 'author', 'title']
         quote_dict = dict(zip(keys, quote))
         return jsonify(quote_dict)
