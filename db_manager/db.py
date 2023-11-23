@@ -35,8 +35,6 @@ def get_selected_quote():
 def execute(psql_raw, fetch: Fetch, params=None):
     with psycopg.connect(**config) as conn:
         with conn.cursor() as cur:
-            print(psql_raw)
-            print(params)
             cur.execute(psql_raw, params)
 
             if fetch == Fetch.ONE:
