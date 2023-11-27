@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import db_manager.db as db
+import utils as utils
 
 app = Flask(__name__)
 
@@ -11,35 +12,61 @@ def get_quote():
         quote_dict = dict(zip(keys, quote))
         return jsonify(quote_dict)
     
-    
-#TODO
 @app.route('/contact', methods = ['POST'])
 def contact():
-    print('in /contact API')
     if(request.method == 'POST'):
-        print(request)
-        return 200
+        try:
+            json = request.get_json()
+            name = json.get('name')
+            email = json.get('email')
+            message = json.get('message')
+            ip = json.get('ip')
+            data = name, email, message, ip
 
+            #TODO
+            db.add_contact_form(data)
+            return ''
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            raise
 
-'''
 @app.route('/signup', methods = ['POST'])
 def signup():
     if(request.method == 'POST'):
-        record = json.loads(request.data)
-        db.create_user
-    return ''
+        try:
+            json = request.get_json()
+            username = json.get('username')
+            email = json.get('json')
+            password = json.get('password')
+            data = username, email, password
+            db.add_signup_entry(data)
+            #TODO
+            return ''
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            raise
 
 @app.route('/cnetLogin', methods = ['POST'])
 def login():
     if(request.method == 'POST'):
-        request
-    return ''
+        try:
+            json = request.get_json()
+            username = json.get('username')
+            password = json.get('password')
+            access = utils.verify_login_attempt(username, password)
+            if access:
+                return 'ALLOW'
+            else:
+                return 'DENY'
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            raise
 
 @app.route('/indexIP', methods = ['POST'])
 def indexIP():
     if(request.method == 'POST'):
+        print('TODO')
     return ''
-'''
 
 
 if __name__ == '__main__':

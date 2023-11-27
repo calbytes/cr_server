@@ -12,18 +12,34 @@ class Fetch(Enum):
     EXC = auto()
 
 def execute(psql_raw, fetch: Fetch, params=None):
-    with psycopg.connect(**config) as conn:
-        with conn.cursor() as cur:
-            cur.execute(psql_raw, params)
+    try:
+        with psycopg.connect(**config) as conn:
+            with conn.cursor() as cur:
+                cur.execute(psql_raw, params)
 
-            if fetch == Fetch.ONE:
-                row = cur.fetchone()
-                return row
-            elif fetch == Fetch.ALL:
-                rows = cur.fetchall()
-                return rows
+                if fetch == Fetch.ONE:
+                    row = cur.fetchone()
+                    return row
+                elif fetch == Fetch.ALL:
+                    rows = cur.fetchall()
+                    return rows
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+        raise
 
-#
+
+#APIs for /login
+def get_db_pwd_hash(username):
+    execute(psql.GET_USER_PWD_HASH, Fetch.ONE, (username,))
+
+
+#APIs for /signup
+def add_signup_entry(data):
+    execute(psql.CREATE_SIGNUP_ENTRY, Fetch.EXC, data)
+
+#APIs for /contact
+def add_contact_form(data):
+    execute(psql.CREATE_CONTACT_ENTRY, Fetch.EXC, data)
 
 # APIs for /quote 
 def get_random_quote():

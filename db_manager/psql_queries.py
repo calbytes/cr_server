@@ -24,3 +24,11 @@ class PSQL_QUERIES:
         SET selected = TRUE 
         WHERE id = %s;
     '''
+
+    #TODO
+    CREATE_CONTACT_ENTRY = '''
+        INSERT INTO contact_table
+        (name, email, message, ip)
+        VALUES
+        (%s, %s, %s, %s)
+    '''
