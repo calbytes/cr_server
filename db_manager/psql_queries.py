@@ -38,3 +38,9 @@ class PSQL_QUERIES:
         VALUES
         (%s, %s, %s, %s, %s)
     '''
+
+    GET_USER_PWD = '''
+        SELECT password 
+        FROM signup_entries 
+        WHERE username = %s;
+    '''

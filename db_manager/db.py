@@ -29,8 +29,9 @@ def execute(psql_raw, fetch: Fetch, params=None):
 
 
 #APIs for /login
-def get_db_pwd_hash(username):
-    execute(psql.GET_USER_PWD_HASH, Fetch.ONE, (username,))
+def get_user_pwd(data):
+    row = execute(psql.GET_USER_PWD, Fetch.ONE, data)
+    return row
 
 
 #APIs for /signup

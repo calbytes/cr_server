@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 import db_manager.db as db
-import utils as utils
+import auth.utils as utils
 from datetime import datetime
 
 app = Flask(__name__)
@@ -8,10 +8,14 @@ app = Flask(__name__)
 @app.route('/quote', methods = ['GET', 'POST'])
 def get_quote():
     if(request.method == 'GET'):
-        quote = db.get_random_quote()
-        keys = ['quote', 'author', 'title']
-        quote_dict = dict(zip(keys, quote))
-        return jsonify(quote_dict)
+        try:
+            quote = db.get_random_quote()
+            keys = ['quote', 'author', 'title']
+            quote_dict = dict(zip(keys, quote))
+            return jsonify(quote_dict)
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 404 
     
 @app.route('/contact', methods = ['POST'])
 def contact():
@@ -55,21 +59,18 @@ def login():
             json = request.get_json()
             username = json.get('username')
             password = json.get('password')
-            access = utils.verify_login_attempt(username, password)
-            if access:
-                return 'ALLOW'
+            ip = json.get('ip')
+
+            is_auth = utils.verify_login_attempt(username, password)
+            if is_auth:
+                return jsonify({'status': 'success', 'role': 'USER'}), 200
             else:
-                return 'DENY'
+                print('user %s not authenticated' % username)
+                return jsonify({'status': '401'}), 401
+            
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
-            raise
-
-@app.route('/indexIP', methods = ['POST'])
-def indexIP():
-    if(request.method == 'POST'):
-        print('TODO')
-    return ''
-
+            return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
