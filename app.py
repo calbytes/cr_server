@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import db_manager.db as db
 import utils as utils
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -21,14 +22,16 @@ def contact():
             email = json.get('email')
             message = json.get('message')
             ip = json.get('ip')
-            data = name, email, message, ip
+            current_timestamp = datetime.now()
+            data = name, email, message, current_timestamp, ip
 
-            #TODO
-            db.add_contact_form(data)
-            return ''
+            print(data)
+            db.create_contact_form(data)
+            return jsonify({'status': 'success'}), 201
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
-            raise
+            return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500 
+
 
 @app.route('/signup', methods = ['POST'])
 def signup():

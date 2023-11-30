@@ -38,8 +38,8 @@ def add_signup_entry(data):
     execute(psql.CREATE_SIGNUP_ENTRY, Fetch.EXC, data)
 
 #APIs for /contact
-def add_contact_form(data):
-    execute(psql.CREATE_CONTACT_ENTRY, Fetch.EXC, data)
+def create_contact_form(data):
+    execute(psql.INSERT_CONTACT_ENTRY, Fetch.EXC, data)
 
 # APIs for /quote 
 def get_random_quote():

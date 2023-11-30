@@ -26,9 +26,9 @@ class PSQL_QUERIES:
     '''
 
     #TODO
-    CREATE_CONTACT_ENTRY = '''
-        INSERT INTO contact_table
-        (name, email, message, ip)
+    INSERT_CONTACT_ENTRY = '''
+        INSERT INTO contact_messages
+        (name, email, message, timestamp, ip)
         VALUES
-        (%s, %s, %s, %s)
+        (%s, %s, %s, %s, %s)
     '''
