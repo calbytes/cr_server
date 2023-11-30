@@ -24,9 +24,7 @@ def contact():
             ip = json.get('ip')
             current_timestamp = datetime.now()
             data = name, email, message, current_timestamp, ip
-
-            print(data)
-            db.create_contact_form(data)
+            db.insert_contact_entry(data)
             return jsonify({'status': 'success'}), 201
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")

@@ -38,7 +38,7 @@ def add_signup_entry(data):
     execute(psql.CREATE_SIGNUP_ENTRY, Fetch.EXC, data)
 
 #APIs for /contact
-def create_contact_form(data):
+def insert_contact_entry(data):
     execute(psql.INSERT_CONTACT_ENTRY, Fetch.EXC, data)
 
 # APIs for /quote 
