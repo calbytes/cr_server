@@ -25,10 +25,16 @@ class PSQL_QUERIES:
         WHERE id = %s;
     '''
 
-    #TODO
     INSERT_CONTACT_ENTRY = '''
         INSERT INTO contact_messages
         (name, email, message, timestamp, ip)
+        VALUES
+        (%s, %s, %s, %s, %s)
+    '''
+
+    INSERT_SIGNUP_ENTRY = '''
+        INSERT INTO signup_entries
+        (username, email, password, timestamp, ip)
         VALUES
         (%s, %s, %s, %s, %s)
     '''

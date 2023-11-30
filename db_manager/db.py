@@ -34,8 +34,8 @@ def get_db_pwd_hash(username):
 
 
 #APIs for /signup
-def add_signup_entry(data):
-    execute(psql.CREATE_SIGNUP_ENTRY, Fetch.EXC, data)
+def insert_signup_entry(data):
+    execute(psql.INSERT_SIGNUP_ENTRY, Fetch.EXC, data)
 
 #APIs for /contact
 def insert_contact_entry(data):

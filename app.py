@@ -22,8 +22,8 @@ def contact():
             email = json.get('email')
             message = json.get('message')
             ip = json.get('ip')
-            current_timestamp = datetime.now()
-            data = name, email, message, current_timestamp, ip
+            current_ts = datetime.now()
+            data = name, email, message, current_ts, ip
             db.insert_contact_entry(data)
             return jsonify({'status': 'success'}), 201
         except Exception as err:
@@ -37,15 +37,16 @@ def signup():
         try:
             json = request.get_json()
             username = json.get('username')
-            email = json.get('json')
+            email = json.get('email')
             password = json.get('password')
-            data = username, email, password
-            db.add_signup_entry(data)
-            #TODO
-            return ''
+            ip = json.get('ip')
+            current_ts = datetime.now()
+            data = username, email, password, current_ts, ip
+            db.insert_signup_entry(data)
+            return jsonify({'status': 'success'}), 201
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
-            raise
+            return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500 
 
 @app.route('/cnetLogin', methods = ['POST'])
 def login():
