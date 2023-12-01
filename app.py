@@ -5,6 +5,20 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+@app.route('/indexIP', methods = ['POST'])
+def index_ip():
+    if(request.method == 'POST'):
+        try:
+            json = request.get_json()
+            ip = json.get('ip')
+            current_ts = datetime.now()
+            data = ip, current_ts
+            db.insert_index_ip(data)
+            return jsonify({'status': 'success'}), 201
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500 
+
 @app.route('/quote', methods = ['GET', 'POST'])
 def get_quote():
     if(request.method == 'GET'):

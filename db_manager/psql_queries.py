@@ -44,3 +44,10 @@ class PSQL_QUERIES:
         FROM signup_entries 
         WHERE username = %s;
     '''
+
+    INSERT_INDEX_IP = '''
+        INSERT INTO index_ips
+        (ip_address, timestamp)
+        VALUES
+        (%s, %s)
+    '''
