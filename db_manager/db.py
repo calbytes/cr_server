@@ -36,7 +36,6 @@ def get_user_pwd(data):
     row = execute(psql.GET_USER_PWD, Fetch.ONE, data)
     return row
 
-
 #APIs for /signup
 def insert_signup_entry(data):
     execute(psql.INSERT_SIGNUP_ENTRY, Fetch.EXC, data)
@@ -48,6 +47,8 @@ def insert_contact_entry(data):
 # APIs for /quote 
 def get_random_quote():
     rows = execute(psql.SELECT_UNSELECTED_QUOTES, Fetch.ALL)
+    if len(rows) == 5:
+        reset_selected_quotes()
     random_num = random.randrange(len(rows))
     quote_id = rows[random_num][0]
     execute(psql.UPDATE_QUOTE_SELECTED, 
@@ -64,3 +65,7 @@ def get_selected_quote():
                     Fetch.ONE, 
                     (quote_id,))
     return quote
+
+def reset_selected_quotes():
+    execute(psql.RESET_SELECTED_QUOTES,
+            Fetch.EXC)

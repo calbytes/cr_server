@@ -51,3 +51,9 @@ class PSQL_QUERIES:
         VALUES
         (%s, %s)
     '''
+
+    RESET_SELECTED_QUOTES = '''
+        UPDATE quotes
+        SET selected = false
+        WHERE selected = true; 
+    '''
