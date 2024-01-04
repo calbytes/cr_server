@@ -85,6 +85,27 @@ def login():
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
+        
+#TODO
+@app.route('/logout', methods = ['POST'])
+def login():
+    if(request.method == 'POST'):
+        try:
+            json = request.get_json()
+            username = json.get('username')
+            password = json.get('password')
+            ip = json.get('ip')
+
+            is_auth = utils.verify_login_attempt(username, password)
+            if is_auth:
+                return jsonify({'status': 'success', 'role': 'USER'}), 200
+            else:
+                print('user %s not authenticated' % username)
+                return jsonify({'status': '401'}), 401
+            
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
