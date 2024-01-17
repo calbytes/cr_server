@@ -88,7 +88,7 @@ def login():
         
 #TODO
 @app.route('/logout', methods = ['POST'])
-def login():
+def logout():
     if(request.method == 'POST'):
         try:
             json = request.get_json()
