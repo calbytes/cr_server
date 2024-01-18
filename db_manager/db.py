@@ -48,8 +48,7 @@ def insert_contact_entry(data):
 def get_random_quote():
     rows = execute(psql.SELECT_UNSELECTED_QUOTES, Fetch.ALL)
     if len(rows) < 5:
-        #reset_selected_quotes()
-        print("in here")
+        reset_selected_quotes()
     random_num = random.randrange(len(rows))
     quote_id = rows[random_num][0]
     execute(psql.UPDATE_QUOTE_SELECTED, 
