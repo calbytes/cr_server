@@ -3,19 +3,22 @@ import db_manager.db as db
 import auth.utils as utils
 from datetime import datetime
 
+import db_manager.db_icon_math as dbim
+
 app = Flask(__name__)
 
-@app.route('/keywords', methods = ['GET'])
+@app.route('/keywords', methods = ['POST'])
 def get_keywords():
-    if(request.method == 'GET'):
+    if(request.method == 'POST'):
         try:
-            keywords = db.get_keywords_by_content_id()
-            json = request.get_json()
-            id = json.get('id')
-            keywords = db.get_keywords_by_content_id(id)
+            json_data = request.get_json()
+            id = json_data.get('id')
+            data = (id,)
+            keywords = dbim.get_keywords_by_content_id(data)
+            print("keywords: " + str(keywords))
             keys = ['keywords']
             response = dict(zip(keys, keywords))
-            return jsonify(keywords)
+            return jsonify(response)
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 404 
