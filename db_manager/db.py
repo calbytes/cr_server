@@ -27,6 +27,10 @@ def execute(psql_raw, fetch: Fetch, params=None):
         print(f"Unexpected {err=}, {type(err)=}")
         raise
 
+# APIs for IconMath Keywords
+
+
+
 #APIs for /indexIP
 def insert_index_ip(data):
     execute(psql.INSERT_INDEX_IP, Fetch.EXC, data)

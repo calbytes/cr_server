@@ -5,6 +5,21 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+@app.route('/keywords', methods = ['GET'])
+def get_keywords():
+    if(request.method == 'GET'):
+        try:
+            keywords = db.get_keywords_by_content_id()
+            json = request.get_json()
+            id = json.get('id')
+            keywords = db.get_keywords_by_content_id(id)
+            keys = ['keywords']
+            response = dict(zip(keys, keywords))
+            return jsonify(keywords)
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 404 
+
 @app.route('/indexIP', methods = ['POST'])
 def index_ip():
     if(request.method == 'POST'):
