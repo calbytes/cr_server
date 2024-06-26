@@ -1,5 +1,5 @@
 # cnet_db_server
-a simple backend db web server for my website
+a python web service to access db.
 
 This application is running on Flask and Gunicorn.
 
