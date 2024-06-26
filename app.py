@@ -15,7 +15,6 @@ def get_keywords():
             id = json_data.get('id')
             data = (id,)
             keywords = dbim.get_keywords_by_content_id(data)
-            print("keywords: " + str(keywords))
             keys = ['keywords']
             response = dict(zip(keys, keywords))
             return jsonify(response)
