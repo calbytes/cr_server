@@ -1,7 +1,5 @@
 import db_manager.db_icon_math as dbim
 
-
-
 def test_db():
     id = 1
     data = (id,)
