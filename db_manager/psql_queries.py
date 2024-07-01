@@ -1,17 +1,5 @@
 class PSQL_QUERIES:
 
-    # Icon Math Queries
-    GET_KEYWORDS_BY_ID = '''
-        SELECT keywords
-        FROM keywords
-        WHERE lesson_order = %s
-    '''
-
-
-
-
-
-    # CNET QUERIES
     SELECT_LAST_QUOTE_ID = '''
         SELECT quote_id
         FROM selected_quotes
