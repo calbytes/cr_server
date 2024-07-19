@@ -73,7 +73,7 @@ def login():
             json = request.get_json()
             email = json.get('email')
             password = json.get('password')
-            ip = json.get('ip')
+            ip = json.get('ip') #TODO - table with log in attempts
 
             is_auth = utils.verify_login_attempt(email, password)
 
