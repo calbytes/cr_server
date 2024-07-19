@@ -36,6 +36,10 @@ def get_user_pwd(data):
     row = execute(psql.GET_USER_PWD, Fetch.ONE, data)
     return row
 
+def get_user_entitlements(data):
+    row = execute(psql.GET_USER_ENTITLEMENTS, Fetch.ONE, data)
+    return row[0]
+
 #APIs for /signup
 def insert_signup_entry(data):
     execute(psql.INSERT_SIGNUP_ENTRY, Fetch.EXC, data)
@@ -69,3 +73,12 @@ def get_selected_quote():
 def reset_selected_quotes():
     execute(psql.RESET_SELECTED_QUOTES,
             Fetch.EXC)
+    
+
+# User / Entitlements
+def add_entitlements(data):
+    execute(psql.INSERT_ENTITLEMENTS, Fetch.EXC, data)
+
+def get_user_name(data):
+    row = execute(psql.GET_USERNAME, Fetch.ONE, data)
+    return row[0]

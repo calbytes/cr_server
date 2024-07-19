@@ -3,3 +3,6 @@ a python web service to access db.
 
 This application is running on Flask and Gunicorn.
 
+# Local Usage
+
+> flask run

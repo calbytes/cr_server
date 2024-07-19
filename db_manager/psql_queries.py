@@ -42,7 +42,7 @@ class PSQL_QUERIES:
     GET_USER_PWD = '''
         SELECT password 
         FROM signup_entries 
-        WHERE username = %s;
+        WHERE email = %s;
     '''
 
     INSERT_INDEX_IP = '''
@@ -56,4 +56,23 @@ class PSQL_QUERIES:
         UPDATE quotes
         SET selected = false
         WHERE selected = true; 
+    '''
+
+    GET_USER_ENTITLEMENTS = '''
+        SELECT role
+        FROM entitlements
+        WHERE email = %s;
+    '''
+
+    INSERT_ENTITLEMENTS = '''
+        INSERT INTO entitlements
+        (email, role, resource)
+        VALUES
+        (%s, %s, %s)
+    '''
+
+    GET_USERNAME = '''
+        SELECT username
+        FROM signup_entries
+        WHERE email = %s;
     '''

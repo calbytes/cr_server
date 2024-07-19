@@ -66,22 +66,30 @@ def signup():
             print(f"Unexpected {err=}, {type(err)=}")
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500 
 
-@app.route('/cnetLogin', methods = ['POST'])
+@app.route('/login', methods = ['POST'])
 def login():
     if(request.method == 'POST'):
         try:
             json = request.get_json()
-            username = json.get('username')
+            email = json.get('email')
             password = json.get('password')
             ip = json.get('ip')
 
-            is_auth = utils.verify_login_attempt(username, password)
+            is_auth = utils.verify_login_attempt(email, password)
+
+            entitlements = ''
+            username = ''
+            data = (email,)
             if is_auth:
-                return jsonify({'status': 'success', 'role': 'USER'}), 200
-            else:
-                print('user %s not authenticated' % username)
-                return jsonify({'status': '401'}), 401
-            
+                entitlements = db.get_user_entitlements(data)
+                username = db.get_user_name(data)
+
+            response = {
+                'role': entitlements,
+                'username': username
+            }
+
+            return jsonify(response)
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
