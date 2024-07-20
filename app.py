@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 import db_manager.db as db
-import auth.utils as utils
+import utils.auth as auth
 from datetime import datetime
 
 app = Flask(__name__)
@@ -75,21 +75,22 @@ def login():
             password = json.get('password')
             ip = json.get('ip') #TODO - table with log in attempts
 
-            is_auth = utils.verify_login_attempt(email, password)
+            is_auth = auth.verify_login_attempt(email, password)
 
             entitlements = ''
             username = ''
+
             data = (email,)
             if is_auth:
                 entitlements = db.get_user_entitlements(data)
                 username = db.get_user_name(data)
-
-            response = {
-                'role': entitlements,
-                'username': username
-            }
-
-            return jsonify(response)
+                response = {
+                    'role': entitlements,
+                    'username': username
+                }
+                return jsonify(response)
+            else:
+                return jsonify({'status': 'error', 'message': 'UNAUTHORIZED'}), 401
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
@@ -104,7 +105,7 @@ def logout():
             password = json.get('password')
             ip = json.get('ip')
 
-            is_auth = utils.verify_login_attempt(username, password)
+            is_auth = auth.verify_login_attempt(username, password)
             if is_auth:
                 return jsonify({'status': 'success', 'role': 'USER'}), 200
             else:
