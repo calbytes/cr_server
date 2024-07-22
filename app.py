@@ -59,8 +59,12 @@ def signup():
             password = json.get('password')
             ip = json.get('ip')
             current_ts = datetime.now()
-            data = username, email, password, current_ts, ip
-            db.insert_signup_entry(data)
+            data = (username, email, password, current_ts, ip)
+            try:
+                db.insert_signup_entry(data)
+            except:
+                return jsonify({'status': 'error', 'message': 'There was an error processing Signup'}), 500 
+            
             return jsonify({'status': 'success'}), 201
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
