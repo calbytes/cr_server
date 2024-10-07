@@ -63,18 +63,9 @@ def get_random_quote():
                     (quote_id,))
     return quote
 
-def get_selected_quote():
-    quote_id = execute(psql.SELECT_LAST_QUOTE_ID, Fetch.ONE)[0]
-    quote = execute(psql.SELECT_QUOTE_BY_ID, 
-                    Fetch.ONE, 
-                    (quote_id,))
-    return quote
-
 def reset_selected_quotes():
-    execute(psql.RESET_SELECTED_QUOTES,
-            Fetch.EXC)
+    execute(psql.RESET_SELECTED_QUOTES, Fetch.EXC)
     
-
 # User / Entitlements
 def add_entitlements(data):
     execute(psql.INSERT_ENTITLEMENTS, Fetch.EXC, data)
@@ -82,3 +73,9 @@ def add_entitlements(data):
 def get_user_name(data):
     row = execute(psql.GET_USERNAME, Fetch.ONE, data)
     return row[0]
+
+
+# Pool Stats / Ledger
+def get_pool_players():
+    rows = execute(psql.SELECT_DISTINCT_POOL_PLAYERS, Fetch.ALL)
+

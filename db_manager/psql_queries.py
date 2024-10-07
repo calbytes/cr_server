@@ -76,3 +76,9 @@ class PSQL_QUERIES:
         FROM signup_entries
         WHERE email = %s;
     '''
+
+    SELECT_DISTINCT_POOL_PLAYERS = '''
+        select distinct player
+        from pool_games
+        ORDER by (player)
+    '''
