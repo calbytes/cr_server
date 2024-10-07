@@ -76,6 +76,9 @@ def get_user_name(data):
 
 
 # Pool Stats / Ledger
-def get_pool_players():
-    rows = execute(psql.SELECT_DISTINCT_POOL_PLAYERS, Fetch.ALL)
+def get_pool_player_stats():
+    stats = execute(psql.SELECT_POOL_PLAYER_STATS, Fetch.ALL)
+    return stats
+
+
 

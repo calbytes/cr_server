@@ -120,13 +120,15 @@ def logout():
             print(f"Unexpected {err=}, {type(err)=}")
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
 
+
 @app.route('/pool_stats', methods = ['GET'])
 def pool_stats():
     if(request.method == 'GET'):
         try:
-            players = db.get_pool_players()
-            print(players)
-                      
+            player_stats = db.get_pool_player_stats()
+            print(player_stats)
+            return player_stats
+
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
