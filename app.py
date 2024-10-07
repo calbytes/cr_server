@@ -126,7 +126,6 @@ def pool_stats():
     if(request.method == 'GET'):
         try:
             player_stats = db.get_pool_player_stats()
-            print(player_stats)
             return player_stats
 
         except Exception as err:
