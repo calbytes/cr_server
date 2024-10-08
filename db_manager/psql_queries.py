@@ -70,7 +70,22 @@ class PSQL_QUERIES:
         WHERE email = %s;
     '''
 
+    # Pool Ledger 
+
     SELECT_POOL_PLAYER_STATS = '''
         SELECT *
         FROM pool_player_stats
+    '''
+
+    SELECT_SCORESHEET_IDS = '''
+        SELECT file_id
+        FROM pool_files
+        WHERE file_id != 0
+		ORDER BY file_id;
+    '''
+
+    SELECT_POOL_FILE = '''
+        SELECT file_data
+        FROM pool_files
+        WHERE file_name = %s;
     '''

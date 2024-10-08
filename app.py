@@ -1,7 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 import db_manager.db as db
 import utils.auth as auth
 from datetime import datetime
+from io import BytesIO
 
 app = Flask(__name__)
 
@@ -70,6 +71,7 @@ def signup():
             print(f"Unexpected {err=}, {type(err)=}")
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500 
 
+
 @app.route('/login', methods = ['POST'])
 def login():
     if(request.method == 'POST'):
@@ -99,6 +101,7 @@ def login():
             print(f"Unexpected {err=}, {type(err)=}")
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
         
+
 #TODO
 @app.route('/logout', methods = ['POST'])
 def logout():
@@ -121,12 +124,48 @@ def logout():
             return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
 
 
+# POOL LEDGER
+
 @app.route('/pool_stats', methods = ['GET'])
 def pool_stats():
     if(request.method == 'GET'):
         try:
             player_stats = db.get_pool_player_stats()
             return player_stats
+
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
+
+
+@app.route('/pool_scoresheet_ids', methods = ['GET'])
+def pool_stats():
+    if(request.method == 'GET'):
+        try:
+            scoresheet_ids = db.get_scoresheet_ids()
+            return scoresheet_ids
+
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            return jsonify({'status': 'error', 'message': 'There was an error processing the request'}), 500
+
+
+@app.route('/pool_file', methods = ['GET'])
+def pool_file():
+    if(request.method == 'GET'):
+        try:
+            file_id = request.args.get('file_type')
+            file_name = request.args.get('file_name')
+
+            if file_id != 0:
+                file_name = "sheet" + file_id
+            
+            file_name += ".jpg"
+            
+            data = (file_name,)
+            pool_file = db.get_pool_file(data)
+            file_io = BytesIO(pool_file)
+            return send_file(file_io, mimetype='image/jpeg')
 
         except Exception as err:
             print(f"Unexpected {err=}, {type(err)=}")

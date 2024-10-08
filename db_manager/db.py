@@ -80,5 +80,11 @@ def get_pool_player_stats():
     stats = execute(psql.SELECT_POOL_PLAYER_STATS, Fetch.ALL)
     return stats
 
+def get_scoresheet_ids():
+    rows = execute(psql.SELECT_SCORESHEET_IDS, Fetch.ALL)
+    scoresheet_ids = [row[0] for row in rows]
+    return scoresheet_ids
 
-
+def get_pool_file():
+    row = execute(psql.SELECT_POOL_FILE, Fetch.ONE)
+    return row[0]
