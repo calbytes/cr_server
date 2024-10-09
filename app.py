@@ -139,7 +139,7 @@ def pool_stats():
 
 
 @app.route('/pool_scoresheet_ids', methods = ['GET'])
-def pool_stats():
+def pool_scoresheet_ids():
     if(request.method == 'GET'):
         try:
             scoresheet_ids = db.get_scoresheet_ids()
@@ -154,7 +154,7 @@ def pool_stats():
 def pool_file():
     if(request.method == 'GET'):
         try:
-            file_id = request.args.get('file_type')
+            file_id = request.args.get('file_id')
             file_name = request.args.get('file_name')
 
             if file_id != 0:
