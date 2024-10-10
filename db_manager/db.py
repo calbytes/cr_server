@@ -85,6 +85,6 @@ def get_scoresheet_ids():
     scoresheet_ids = [row[0] for row in rows]
     return scoresheet_ids
 
-def get_pool_file():
-    row = execute(psql.SELECT_POOL_FILE, Fetch.ONE)
+def get_pool_file(data):
+    row = execute(psql.SELECT_POOL_FILE, Fetch.ONE, data)
     return row[0]
